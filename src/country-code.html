@@ -1,0 +1,41 @@
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/web-animations-js/web-animations-next.min.html">
+
+<dom-module id="country-code">
+  <template>
+    <style>
+      :host {}
+    </style>
+
+    <paper-dropdown-menu id="code" label="">
+      <paper-listbox slot="dropdown-content">
+        <paper-item selected class="iron-selected" aria-selected="true">+7</paper-item>
+        <paper-item>+357</paper-item>
+        <paper-item>+420</paper-item>
+        <paper-item>+380</paper-item>
+        <paper-item>+999</paper-item>
+      </paper-listbox>
+    </paper-dropdown-menu>
+
+  </template>
+  <script>
+    class CountryCode extends Polymer.Element {
+      static get is() { return 'country-code'; }
+
+      static get properties() {
+        return {};
+      }
+
+      ready() {
+        super.ready();
+
+        console.log(this.selectedItem);
+      }
+
+    }
+
+    window.customElements.define(CountryCode.is, CountryCode);
+  </script>
+</dom-module>

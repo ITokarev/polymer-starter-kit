@@ -1,0 +1,24 @@
+<link rel="import" href="../bower_components/gold-phone-input/gold-phone-input.html">
+
+<dom-module id="phone-input-custom">
+  <template>
+    <style>
+      :host {}
+    </style>
+
+    <gold-phone-input></gold-phone-input>
+
+  </template>
+
+  <script>
+    class PhoneInputCustom extends Polymer.Element {
+      static get is() { return 'phone-input-custom'; }
+
+      static get properties() {
+        return {};
+      }
+    }
+
+    window.customElements.define(PhoneInputCustom.is, PhoneInputCustom);
+  </script>
+</dom-module>
