@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/gold-phone-input/gold-phone-input.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="my-view2">
@@ -22,6 +23,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <div class="card">
+
+      <gold-phone-input international-value="{{internationalValue}}" country-code="7"></gold-phone-input>
+      <br>
+      [[internationalValue]]
+      <br>
       <div class="circle">2</div>
       <h1>View Two</h1>
       <p>Ea duis bonorum nec, falli paulo aliquid ei eum.</p>

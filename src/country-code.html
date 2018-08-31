@@ -9,7 +9,7 @@
       :host {}
     </style>
 
-    <paper-dropdown-menu id="code" label="">
+    <paper-dropdown-menu id="code" country-code="{{value}}" label="">
       <paper-listbox slot="dropdown-content">
         <paper-item selected class="iron-selected" aria-selected="true">+7</paper-item>
         <paper-item>+357</paper-item>
@@ -25,13 +25,18 @@
       static get is() { return 'country-code'; }
 
       static get properties() {
-        return {};
+        return {
+            value: {
+                type: String,
+                value: '+7'
+            }
+        };
       }
 
       ready() {
         super.ready();
 
-        console.log(this.selectedItem);
+        console.log(this.value);
       }
 
     }

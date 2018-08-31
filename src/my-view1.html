@@ -24,7 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div class="card">
 
-      <gold-phone-input></gold-phone-input>
+      <gold-phone-input countries="[[_countries()]]"></gold-phone-input>
 
       <!--<paper-dropdown-menu label="Код страны">-->
         <!--<paper-listbox slot="dropdown-content">-->
@@ -46,6 +46,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     class MyView1 extends Polymer.Element {
       static get is() { return 'my-view1'; }
+
+      /**
+       * Countries Codes with any data
+       */
+      _countries() {
+        return [
+          {
+            name: 'Россия',
+            code: '7'
+          },
+          {
+            name: 'Беларусь',
+            code: '375'
+          },
+          {
+            name: 'Армения',
+            code: '374'
+          },
+        ];
+      }
     }
 
     window.customElements.define(MyView1.is, MyView1);

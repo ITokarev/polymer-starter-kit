@@ -16,6 +16,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-form-element-behavior/iron-form-element-behavior.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="country-code.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/web-animations-js/web-animations-next.min.html">
 
 <!--
 `<gold-phone-input>` is a single-line text field with Material Design styling
@@ -65,6 +69,18 @@ style this element.
     <style>
       :host {
         display: block;
+        --secondary-text-color: #e1e1e1;
+        --paper-font-caption_-_line-height: 18px;
+      }
+
+      #code {
+        width: 62px;
+        float: left;
+        margin-right: 20px;
+      }
+
+      #code .floated-label-placeholder {
+        margin-top: 1px;
       }
 
       /* TODO: This should be a dropdown */
@@ -112,11 +128,26 @@ style this element.
       input:-ms-input-placeholder {
         color: var(--paper-input-container-color, var(--secondary-text-color));
       }
-      #input {
-        margin-top: 20px;
-        margin-left: 20px;
+      /*#input {*/
+        /*margin-top: 20px;*/
+        /*margin-left: 20px;*/
+      /*}*/
+      #container {
+        width: calc(100% - 82px);
+        float: left;
+        margin-top: 1px;
+        /*width: 100%;*/
       }
     </style>
+
+    <paper-dropdown-menu id="code" value="{{countryCode}}" label="Code">
+      <paper-listbox slot="dropdown-content">
+        <template is="dom-repeat" items="[[countries]]" as="country">
+          <paper-item>+[[country.code]]</paper-item>
+        </template>
+      </paper-listbox>
+    </paper-dropdown-menu>
+
     <paper-input-container id="container"
         disabled$="[[disabled]]"
         no-label-float="[[noLabelFloat]]"
@@ -125,9 +156,9 @@ style this element.
 
       <label slot="label" hidden$="[[!label]]">[[label]]</label>
 
-      <span slot="prefix" prefix class="country-code">
-        <country-code></country-code>
-      </span>
+      <!--<span slot="prefix" prefix class="country-code">-->
+        <!---->
+      <!--</span>-->
 
       <span id="template-placeholder"></span>
 
@@ -138,6 +169,15 @@ style this element.
       </template>
 
     </paper-input-container>
+
+    <hr>
+    [[countryCode]]
+    <br>
+    [[value]]
+    <br>
+    [[internationalValue]]
+    <br>
+    <hr>
   </template>
 
   <template id="v0">
@@ -203,12 +243,16 @@ style this element.
         value: 'Phone number'
       },
 
+      maxlength: {
+          value: 13
+      },
+
       /*
        * The country code that should be recognized and parsed.
        */
       countryCode: {
         type: String,
-        value: '7'
+        value: '+7'
       },
 
       /*
@@ -217,7 +261,7 @@ style this element.
        */
       phoneNumberPattern: {
         type: String,
-        value: 'XXX-XXX-XXXX',
+        value: 'XXX-XXX-XX-XX',
         observer: '_phoneNumberPatternChanged'
       },
 
@@ -235,6 +279,11 @@ style this element.
         type: String,
         notify: true,
         computed: '_computeInternationalValue(countryCode, value)'
+      },
+
+      placeholder: {
+          type: String,
+          value: '999-999-99-99'
       }
     },
 
@@ -389,14 +438,7 @@ style this element.
      */
     _computeInternationalValue: function(countryCode, value) {
       return countryCode ? '+(' + countryCode + ')' + value : value;
-    },
-
-    // /**
-    //  * {Numeric} Country code (without "+")
-    //  */
-    // _setCountryCode: function(code) {
-    //     this.countryCode = code;
-    // }
+    }
   });
 
   </script>
