@@ -15,7 +15,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-input/iron-input.html">
 <link rel="import" href="../bower_components/iron-form-element-behavior/iron-form-element-behavior.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="country-code.html">
 <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
@@ -73,13 +72,13 @@ style this element.
         --paper-font-caption_-_line-height: 18px;
       }
 
-      #code {
+      .code {
         width: 62px;
         float: left;
         margin-right: 20px;
       }
 
-      #code .floated-label-placeholder {
+      .code .floated-label-placeholder {
         margin-top: 1px;
       }
 
@@ -128,56 +127,47 @@ style this element.
       input:-ms-input-placeholder {
         color: var(--paper-input-container-color, var(--secondary-text-color));
       }
-      /*#input {*/
-        /*margin-top: 20px;*/
-        /*margin-left: 20px;*/
-      /*}*/
-      #container {
-        width: calc(100% - 82px);
+      .container {
+        width: calc(100% - 96px);
         float: left;
         margin-top: 1px;
-        /*width: 100%;*/
+      }
+      .plus_items {
+        width: 14px;
+        float: left;
+        padding-top: 27px;
       }
     </style>
 
-    <paper-dropdown-menu id="code" value="{{countryCode}}" label="Code">
+    <div id="plus_item" class="plus_items">+</div>
+
+    <paper-dropdown-menu id="code" class="code" value="{{countryCode}}" label="Code">
       <paper-listbox slot="dropdown-content">
         <template is="dom-repeat" items="[[countries]]" as="country">
-          <paper-item>+[[country.code]]</paper-item>
+          <paper-item>[[country.code]]</paper-item>
         </template>
       </paper-listbox>
     </paper-dropdown-menu>
 
-    <paper-input-container id="container"
-        disabled$="[[disabled]]"
-        no-label-float="[[noLabelFloat]]"
-        always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]"
-        invalid="[[invalid]]">
+    <paper-input-container
+      id="container"
+      class="container"
+      disabled$="[[disabled]]"
+      no-label-float="[[noLabelFloat]]"
+      always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]"
+      invalid="[[invalid]]">
 
-      <label slot="label" hidden$="[[!label]]">[[label]]</label>
+          <label slot="label" hidden$="[[!label]]">[[label]]</label>
 
-      <!--<span slot="prefix" prefix class="country-code">-->
-        <!---->
-      <!--</span>-->
+          <span id="template-placeholder"></span>
 
-      <span id="template-placeholder"></span>
-
-      <template is="dom-if" if="[[errorMessage]]">
-        <paper-input-error slot="add-on" id="error">
-          [[errorMessage]]
-        </paper-input-error>
-      </template>
+          <template is="dom-if" if="[[errorMessage]]">
+            <paper-input-error slot="add-on" id="error">
+              [[errorMessage]]
+            </paper-input-error>
+          </template>
 
     </paper-input-container>
-
-    <hr>
-    [[countryCode]]
-    <br>
-    [[value]]
-    <br>
-    [[internationalValue]]
-    <br>
-    <hr>
   </template>
 
   <template id="v0">
@@ -252,7 +242,7 @@ style this element.
        */
       countryCode: {
         type: String,
-        value: '+7'
+        value: '7'
       },
 
       /*
@@ -279,6 +269,12 @@ style this element.
         type: String,
         notify: true,
         computed: '_computeInternationalValue(countryCode, value)'
+      },
+
+      unformattedInternationalValue: {
+        type: String,
+        notify: true,
+        computed: '_computeUnformattedInternationalValue(countryCode, value)'
       },
 
       placeholder: {
@@ -438,6 +434,13 @@ style this element.
      */
     _computeInternationalValue: function(countryCode, value) {
       return countryCode ? '+(' + countryCode + ')' + value : value;
+    },
+
+    /**
+    * Phone number format for store
+    */
+    _computeUnformattedInternationalValue: function(countryCode, value) {
+      return (value != undefined) ? '+' + countryCode + value.replace(/\-/g,'') : '';
     }
   });
 
